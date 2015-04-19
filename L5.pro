@@ -11,8 +11,17 @@ QT       -= gui
 TARGET = L5
 CONFIG   += console
 CONFIG   -= app_bundle
+CONFIG += C++11
 
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    state.cpp \
+    statelist.cpp
+
+HEADERS += \
+    list.h \
+    node.h \
+    state.h \
+    statelist.h
