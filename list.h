@@ -23,6 +23,7 @@ public:
   void insert (const T& value, int index);
 
   const T &at(int index);
+  T valueAt(int index);
   inline const T & operator [] (int index){ return at(index);}
   int indexOf(const T& value);
 
@@ -35,7 +36,7 @@ public:
   inline bool isEmpty(){ return (len==0);}
   inline unsigned int Len(){return len;}
 
-  void Sort(int(*comparison)(const T &, const T &));
+  void Sort(int start, int end, int(*comparison)(const T &, const T &));
   const T& elementByValue (int(*comparison)(const T &, const T &));
 
 };
@@ -158,6 +159,25 @@ const T& List<T>::at(int index)
     }
 }
 
+template<typename T>
+T List<T>::valueAt(int index)
+{
+    try
+    {
+        if (len==0 || index<0 || index>=len) throw std::out_of_range("Incorrect index");
+
+        Node<T>* currNode=first;
+        for(int i=0;i<index;i++)
+            currNode=currNode->next;
+
+        return currNode->value;
+    }
+    catch (std::out_of_range)
+    {
+
+    }
+}
+
 template <typename T>
 void List<T>::removeValue (const T &value)
 {
@@ -248,8 +268,30 @@ void List<T>::deleteNode (Node<T>* node)
    }
 
  template <typename T>
- void List<T>::Sort(int (*comparison)(const T& a, const T& b))
+ void List<T>::Sort(int start, int end, int (*comparison)(const T& a, const T& b))
  {
+     T mid = at((start+end)/2);
+     int i = start;
+     int j = end;
+
+     while(i <= j)
+     {
+         while(comparison(at(i),mid)==-1) i++;
+         while(comparison(at(j),mid)==1) j--;
+
+           if(i <= j)
+           {
+               T temp=getNodeByIndex(i)->value;
+               getNodeByIndex(i)->value=getNodeByIndex(j)->value;
+               getNodeByIndex(j)->value=temp;
+
+               i++;
+               j--;
+           }
+        }
+        if (i<end) Sort(i, end,comparison);
+
+        if (start<j) Sort(start, j, comparison);
 
  }
 

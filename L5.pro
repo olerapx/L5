@@ -17,11 +17,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    state.cpp \
-    statelist.cpp
+    state.cpp
 
 HEADERS += \
     list.h \
     node.h \
-    state.h \
-    statelist.h
+    state.h

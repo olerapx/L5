@@ -2,6 +2,12 @@
 #define STATE_H
 #include <string>
 #include <cstring>
+#include <iostream>
+#include <fstream>
+#include "list.h"
+
+namespace State
+{
 
 class State
 {
@@ -25,6 +31,9 @@ int compareTerrritoryArea(const State& s1, const State& s2);
 int compareMonetaryUnit(const State& s1, const State& s2);
 int comparePoliticalSystem(const State& s1, const State& s2);
 
+void writeToFile (std::ofstream &ofs);
+void readFromFile (std::ifstream &ifs, List<State>& list);
 
+}
 #endif // STATE_H
 
