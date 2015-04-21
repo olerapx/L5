@@ -22,9 +22,9 @@ public:
   inline void operator << (const T& value) {add(value);}
   void insert (const T& value, int index);
 
-  const T &at(int index);
+  T &at(int index);
   T valueAt(int index);
-  inline const T & operator [] (int index){ return at(index);}
+  inline T & operator [] (int index){ return at(index);}
   int indexOf(const T& value);
 
   void removeValue (const T& value);
@@ -141,7 +141,7 @@ int List<T>::indexOf(const T &value)
 }
 
 template<typename T>
-const T& List<T>::at(int index)
+T &List<T>::at(int index)
 {
     try
     {
@@ -276,8 +276,8 @@ void List<T>::deleteNode (Node<T>* node)
 
      while(i <= j)
      {
-         while(comparison(at(i),mid)==-1) i++;
-         while(comparison(at(j),mid)==1) j--;
+         while(comparison(at(i),mid)<0) i++;
+         while(comparison(at(j),mid)>0) j--;
 
            if(i <= j)
            {

@@ -4,6 +4,8 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <sstream>
 #include "list.h"
 
 namespace State
@@ -31,8 +33,12 @@ int compareTerrritoryArea(const State& s1, const State& s2);
 int compareMonetaryUnit(const State& s1, const State& s2);
 int comparePoliticalSystem(const State& s1, const State& s2);
 
-void writeToFile (std::ofstream &ofs);
+void writeToFile (std::ofstream &ofs, List<State>& list);
 void readFromFile (std::ifstream &ifs, List<State>& list);
+void readFromKeyboard(List<State>&list);
+
+
+
 
 }
 #endif // STATE_H

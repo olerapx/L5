@@ -1,6 +1,7 @@
 #include "state.h"
 
 
+
 int State::compareCountryName(const State& s1, const State& s2)
 {
     return strcmp(s1.countryName.c_str(), s2.countryName.c_str());
@@ -40,12 +41,134 @@ int State::comparePoliticalSystem(const State& s1, const State& s2)
    return strcmp(s1.politicalSystem.c_str(), s2.politicalSystem.c_str());
 }
 
-void State::writeToFile (std::ofstream &ofs)
+void State::writeToFile (std::ofstream &ofs, List<State> &list)
 {
+    for (int i=0;i<list.Len();i++)
+       ofs<<list[i].capitalName<<"\n" <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
+                   "\nMonetary unit: "<<list[i].monetaryUnit<<"\nPolitical system: " <<list[i].politicalSystem<<
+                   "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";
+}
+
+void State::readFromFile (std::ifstream &fs, List<State>& list)
+{
+    std::string s;
+    int i=0, currListIndex=-1;
+    while (!fs.eof())
+    {
+        std::getline(fs,s);
+       switch(i)
+       {
+       case 0:
+       {
+               State state;
+               list.add(state);
+               currListIndex++;
+               list[currListIndex].capitalName=s;
+               i++;
+               break;
+       }
+       case 1:
+              list[currListIndex].countryName=s;
+              i++;
+              break;
+       case 2:
+       {
+              int index = s.find(':')+2;
+              list[currListIndex].language=s.substr(index, s.length()-index);
+              i++;
+              break;
+       }
+       case 3:
+       {
+           int index = s.find(':')+2;
+           list[currListIndex].monetaryUnit=s.substr(index, s.length()-index);
+              i++;
+              break;
+       }
+       case 4:
+       {
+           int index = s.find(':')+2;
+           list[currListIndex].politicalSystem=s.substr(index, s.length()-index);
+              i++;
+              break;
+       }
+       case 5:
+       {
+           std::string curr;
+           int index = s.find(':')+2;
+           curr=s.substr(index, s.length()-index);
+
+              list[currListIndex].population=atoi(curr.c_str());
+              i++;
+              break;
+       }
+       case 6:
+       {
+              std::string curr;
+              int index = s.find(':')+2;
+              curr=s.substr(index, s.length()-index);
+              list[currListIndex].territoryArea=std::atof(curr.c_str());
+              i++;
+              break;
+       }
+       case 7:
+       {
+              i++;
+              break;
+       }
+
+       case 8:
+       {
+              i=0;
+              break;
+       }
+
+       }
+   }
+    list.removeAt(list.Len()-1);
+}
+
+void State::readFromKeyboard(List<State>&list)
+{
+     std::string s=" ";
+     std::cout <<"Input capital name, country name, language, monetary unit, political system, population and area."
+                 "Each field must delim by tabulation. Input empty string to finish.\n";
+    while (true)
+    {
+        std::getline(std::cin,s);
+        if (s=="") break;
+        std::vector <std::string> parsed;
+        std::string curr;
+        std::stringstream stream(s);
+
+        while (std::getline(stream, curr, '\t'))
+            parsed.push_back(curr);
+
+          State state;
+
+        int len=parsed.size();
+        if (len>0) state.capitalName=parsed[0]; else state.capitalName="No capital";
+        if (len>1)state.countryName=parsed[1]; else state.countryName="No country";
+        if (len>2)state.language=parsed[2]; else state.language="No language";
+        if (len>3)state.monetaryUnit=parsed[3]; else state.monetaryUnit="Undefined";
+        if (len>4)state.politicalSystem =parsed[4]; else state.politicalSystem="Undefined";
+        if (len>5)
+        {
+            std::stringstream intStream(parsed[5]);
+            intStream>> state.population;
+        }
+        else state.population=0;
+
+        if (len>6)
+        {
+            std::stringstream intStream(parsed[6]);
+            intStream>> state.territoryArea;
+        }
+        else state.territoryArea=0.0;
+
+        list.add(state);
+   }
 
 }
 
-void State::readFromFile (std::ifstream &ifs, List<State>& list)
-{
 
-}

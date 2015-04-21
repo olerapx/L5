@@ -2,13 +2,13 @@
 #include <iostream>
 #include "state.h"
 
-int comparison(const int& i1, const int& i2)
+void printList(List<State::State>& list)
 {
-    if (i1<i2) return -1;
-    if(i1==i2) return 0;
-    if (i1>i2) return 1;
+ for (int i=0;i<list.Len();i++)
+    std::cout<<list[i].capitalName<<"\n" <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
+                "\nMonetary unit: "<<list[i].monetaryUnit<<"\nPolitical system: " <<list[i].politicalSystem<<
+                "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";
 }
-
 
 
 int main(int argc, char *argv[])
@@ -16,23 +16,27 @@ int main(int argc, char *argv[])
 
  using namespace State;
 
-    State::State s1,s2;
-    s1.capitalName="Moscow";
-    s2.capitalName="Amsterdam";
-
     List<State::State> list;
 
-   list.add(s1);
-   list.add(s2);
-   std::cout <<list[0].capitalName<<" "<<list[1].capitalName<<"\n";
+    std::ofstream ofs;
+    std::ifstream ifs;
+    /*
+    ofs.open("State");
+
+   readFromKeyboard(list);
+
+   printList(list);
+   writeToFile(ofs, list);
+    ofs.close();
+    */
+    ifs.open("State");
+    readFromFile(ifs, list);
+    ifs.close();
+    printList(list);
 
 
-
-
-
-    list.Sort(0,list.Len()-1,&compareCapitalName);
-    std::cout <<list[0].capitalName<<" "<<list[1].capitalName<<"\n";
-
+    list.Sort(0, list.Len()-1, &comparePopulation);
+    printList(list);
 
 
 
