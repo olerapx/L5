@@ -1,5 +1,15 @@
 #include "state.h"
 
+State::State::State()
+{
+    capitalName="";
+    countryName="";
+    language="";
+    population=0;
+    territoryArea=0.0;
+    monetaryUnit="";
+    politicalSystem="";
+}
 
 
 int State::compareCountryName(const State& s1, const State& s2)
@@ -41,6 +51,7 @@ int State::comparePoliticalSystem(const State& s1, const State& s2)
    return strcmp(s1.politicalSystem.c_str(), s2.politicalSystem.c_str());
 }
 
+
 void State::writeToFile (std::ofstream &ofs, List<State> &list)
 {
     for (int i=0;i<list.Len();i++)
@@ -49,10 +60,11 @@ void State::writeToFile (std::ofstream &ofs, List<State> &list)
                    "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";
 }
 
+
 void State::readFromFile (std::ifstream &fs, List<State>& list)
 {
     std::string s;
-    int i=0, currListIndex=-1;
+    int i=0, currListIndex=list.Len()-1;
     while (!fs.eof())
     {
         std::getline(fs,s);
@@ -112,28 +124,29 @@ void State::readFromFile (std::ifstream &fs, List<State>& list)
               break;
        }
        case 7:
-       {
-              i++;
-              break;
-       }
+             i++; break;
+
 
        case 8:
-       {
-              i=0;
-              break;
-       }
+              i=0; break;
 
        }
    }
     list.removeAt(list.Len()-1);
 }
 
+
 void State::readFromKeyboard(List<State>&list)
 {
      std::string s=" ";
      std::cout <<"Input capital name, country name, language, monetary unit, political system, population and area."
                  "Each field must delim by tabulation. Input empty string to finish.\n";
-    while (true)
+
+    //clear console istream to read correctly
+     std::cin.clear();
+     while(std::cin.get() != '\n');
+
+     while (true)
     {
         std::getline(std::cin,s);
         if (s=="") break;
@@ -147,28 +160,24 @@ void State::readFromKeyboard(List<State>&list)
           State state;
 
         int len=parsed.size();
-        if (len>0) state.capitalName=parsed[0]; else state.capitalName="No capital";
-        if (len>1)state.countryName=parsed[1]; else state.countryName="No country";
-        if (len>2)state.language=parsed[2]; else state.language="No language";
-        if (len>3)state.monetaryUnit=parsed[3]; else state.monetaryUnit="Undefined";
-        if (len>4)state.politicalSystem =parsed[4]; else state.politicalSystem="Undefined";
+        if (len>0) state.capitalName=parsed[0];
+        if (len>1)state.countryName=parsed[1];
+        if (len>2)state.language=parsed[2];
+        if (len>3)state.monetaryUnit=parsed[3];
+        if (len>4)state.politicalSystem =parsed[4];
         if (len>5)
         {
             std::stringstream intStream(parsed[5]);
             intStream>> state.population;
         }
-        else state.population=0;
 
         if (len>6)
         {
-            std::stringstream intStream(parsed[6]);
-            intStream>> state.territoryArea;
+            std::stringstream floatStream(parsed[6]);
+            floatStream>> state.territoryArea;
         }
-        else state.territoryArea=0.0;
 
         list.add(state);
    }
 
 }
-
-

@@ -13,18 +13,17 @@ namespace State
 
 class State
 {
-private:
-
 public:
 
     std::string countryName, capitalName, language;
     int population;
     float territoryArea;
-    std::string monetaryUnit, politicalSystem;
+    std::string monetaryUnit, politicalSystem; 
 
+    State();
 };
 
-//for sorting and finding by value
+//for sorting and getting an element by value of some field
 int compareCountryName(const State& s1, const State& s2);
 int compareCapitalName(const State& s1, const State& s2);
 int compareLanguage(const State& s1, const State& s2);

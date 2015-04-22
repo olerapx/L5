@@ -23,8 +23,7 @@ public:
   void insert (const T& value, int index);
 
   T &at(int index);
-  T valueAt(int index);
-  inline T & operator [] (int index){ return at(index);}
+  inline T & operator [] (int index){return at(index);}
   int indexOf(const T& value);
 
   void removeValue (const T& value);
@@ -36,8 +35,12 @@ public:
   inline bool isEmpty(){ return (len==0);}
   inline unsigned int Len(){return len;}
 
+  //sorts list using compare function. if you want to sort in increasing,
+  //function must return >0 if first operand is bigger than second and <0 if second is bigger than first
   void Sort(int start, int end, int(*comparison)(const T &, const T &));
-  const T& elementByValue (int(*comparison)(const T &, const T &));
+
+  //gets an element in list using compare function. Function must return 0 to neccessary element
+  T &getElementByElementField(const T& value, int(*comparison)(const T &, const T &));
 
 };
 
@@ -159,24 +162,6 @@ T &List<T>::at(int index)
     }
 }
 
-template<typename T>
-T List<T>::valueAt(int index)
-{
-    try
-    {
-        if (len==0 || index<0 || index>=len) throw std::out_of_range("Incorrect index");
-
-        Node<T>* currNode=first;
-        for(int i=0;i<index;i++)
-            currNode=currNode->next;
-
-        return currNode->value;
-    }
-    catch (std::out_of_range)
-    {
-
-    }
-}
 
 template <typename T>
 void List<T>::removeValue (const T &value)
@@ -289,16 +274,17 @@ void List<T>::deleteNode (Node<T>* node)
                j--;
            }
         }
-        if (i<end) Sort(i, end,comparison);
+        if (i<end) Sort(i, end, comparison);
 
         if (start<j) Sort(start, j, comparison);
 
  }
 
  template <typename T>
- const T& List<T>::elementByValue (int(*comparison)(const T &, const T &))
+ T& List<T>::getElementByElementField (const T& value, int(*comparison)(const T &, const T &))
  {
-
+    for (int i=0;i<len;i++)
+        if (comparison(at(i), value)==0) return at(i);
  }
 
   #endif // LIST_H
