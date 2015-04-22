@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include <iostream>
 #include "state.h"
 
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
     std::cout <<"From keyboard:\n";
     printList(list);
 
-    ofs.open(fileName);
+    ofs.open(fileName, std::ios::app);
     writeToFile(ofs, list);
     ofs.close();
 
