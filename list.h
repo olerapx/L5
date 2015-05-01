@@ -3,6 +3,8 @@
 
 #include"node.h"
 #include <stdexcept>
+#include "nullelementexception.h"
+
 template <typename T>
 class List
 {
@@ -255,6 +257,7 @@ void List<T>::deleteNode (Node<T>* node)
  template <typename T>
  void List<T>::Sort(int start, int end, int (*comparison)(const T& a, const T& b))
  {
+     if (len==0) return;
      T mid = at((start+end)/2);
      int i = start;
      int j = end;
@@ -285,6 +288,9 @@ void List<T>::deleteNode (Node<T>* node)
  {
     for (int i=0;i<len;i++)
         if (comparison(at(i), value)==0) return at(i);
+
+    throw NullElementException();
+
  }
 
   #endif // LIST_H

@@ -144,7 +144,6 @@ void State::readFromKeyboard(List<State>&list)
 
     //clear console istream to read correctly
      std::cin.clear();
-     while(std::cin.get() != '\n');
 
      while (true)
     {

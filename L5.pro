@@ -17,9 +17,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    state.cpp
+    state.cpp \
+    nullelementexception.cpp
 
 HEADERS += \
     list.h \
     node.h \
-    state.h
+    state.h \
+    nullelementexception.h
