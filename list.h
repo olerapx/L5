@@ -103,7 +103,6 @@ void List<T>::add(const T& value)
               node->prev=nullptr;
               replaceNode->prev=node;
               first=node;
-
           }
           else
           {
@@ -111,17 +110,14 @@ void List<T>::add(const T& value)
               node->prev=replaceNode->prev;
               replaceNode->prev->next=node;
               replaceNode->prev=node;
-
           }
 
           if (index==len-1) last=replaceNode;
 
           len++;
     }
-     catch (std::out_of_range)
-     {
-     }
- }
+     catch (std::out_of_range){}
+}
 
 template <typename T>
 bool List<T>::isExists(const T &value)
@@ -133,7 +129,6 @@ bool List<T>::isExists(const T &value)
 template <typename T>
 int List<T>::indexOf(const T &value)
 {
-
    Node<T>* currNode=first;
    for(int i=0;i<len;i++)
    {
@@ -142,7 +137,6 @@ int List<T>::indexOf(const T &value)
    }
 
    return -1;
-
 }
 
 template<typename T>
@@ -158,20 +152,16 @@ T &List<T>::at(int index)
 
         return currNode->value;
     }
-    catch (std::out_of_range)
-    {
-
-    }
+    catch (std::out_of_range){}
 }
 
 
 template <typename T>
 void List<T>::removeValue (const T &value)
 {
-
-  Node<T>* node=getNodeByValue(value);
-  if (node==nullptr) return;
-  deleteNode(node);
+    Node<T>* node=getNodeByValue(value);
+    if (node==nullptr) return;
+    deleteNode(node);
 }
 
 template <typename T>
@@ -182,82 +172,86 @@ void List<T>::removeAt(int index)
           Node<T>* node=getNodeByIndex(index);
           deleteNode(node);
       }
-      catch (std::out_of_range)
-      {
-      }
+      catch (std::out_of_range){}
   }
 
 template <typename T>
 void List<T>::clear()
-  {
+{
     int t_len=len;
-    for (int i=0;i<t_len;i++)
-        removeAt(0);
-  }
+    for (int i=0;i<t_len;i++) removeAt(0);
+}
 
 
 template<typename T>
 Node<T>* List<T>::getNodeByValue(const T& value)
- {
-
+{
      Node<T>* currNode=first;
 
-     for(int i=0;i<len;i++){
-              if (currNode->value==value)return currNode;
-              currNode=currNode->next;
-          }
+     for(int i=0;i<len;i++)
+     {
+          if (currNode->value==value)return currNode;
+          currNode=currNode->next;
+     }
 
      return nullptr;
- }
+}
 
 
 template<typename T>
 Node<T>* List<T>::getNodeByIndex(int index)
 {
-     Node<T>* node=first;
-     for (int i=0;i<index;i++)
-         node=node->next;
-     return node;
-
+    try
+    {
+        if (len==0 || index<0 || index>=len) throw std::out_of_range("Incorrect index");
+        Node<T>* node=first;
+        for (int i=0;i<index;i++)
+             node=node->next;
+        return node;
+    }
+    catch (std::out_of_range){}
 }
 
 template <typename T>
 void List<T>::deleteNode (Node<T>* node)
-   {
+{
 
-    if (node==first &&node==last){
+    if (node==first &&node==last)
+    {
            first=nullptr;
            last=nullptr;
            len--;
            return;
-       }
+    }
 
     if (node==first)
-       {
+    {
            first=node->next;
            node->next->prev=nullptr;
            len--;
            return;
-       }
+    }
 
-    if(node==last){
+    if(node==last)
+    {
          last=node->prev;
          node->prev->next=nullptr;
          len--;
          return;
-       }
+    }
 
     node->prev->next=node->next;
     node->next->prev=node->prev;
     len--;
     delete node;
 
-   }
+}
 
  template <typename T>
  void List<T>::Sort(int start, int end, int (*comparison)(const T& a, const T& b))
  {
      if (len==0) return;
+
      T mid = at((start+end)/2);
      int i = start;
      int j = end;
@@ -276,7 +270,7 @@ void List<T>::deleteNode (Node<T>* node)
                i++;
                j--;
            }
-        }
+     }
         if (i<end) Sort(i, end, comparison);
 
         if (start<j) Sort(start, j, comparison);

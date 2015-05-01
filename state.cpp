@@ -54,7 +54,7 @@ int State::comparePoliticalSystem(const State& s1, const State& s2)
 
 void State::writeToFile (std::ofstream &ofs, List<State> &list)
 {
-    for (int i=0;i<list.Len();i++)
+    for (unsigned int i=0;i<list.Len();i++)
        ofs<<list[i].capitalName<<"\n" <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
                    "\nMonetary unit: "<<list[i].monetaryUnit<<"\nPolitical system: " <<list[i].politicalSystem<<
                    "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";

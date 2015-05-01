@@ -2,14 +2,13 @@
 #define NULLELEMENTEXCEPTION_H
 #include "string"
 
-
 //for using in List class
 class NullElementException
 {
  private:
     std::string error;
 
-public:
+ public:
     NullElementException();
     NullElementException (std::string errorText);
 
