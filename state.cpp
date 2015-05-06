@@ -55,7 +55,7 @@ int State::comparePoliticalSystem(const State& s1, const State& s2)
 void State::writeToFile (std::ofstream &ofs, List<State> &list)
 {
     for (unsigned int i=0;i<list.Len();i++)
-       ofs<<list[i].capitalName<<"\n" <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
+       ofs<<"Capital: "<<list[i].capitalName<<"\nCountry: " <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
                    "\nMonetary unit: "<<list[i].monetaryUnit<<"\nPolitical system: " <<list[i].politicalSystem<<
                    "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";
 }
@@ -67,72 +67,71 @@ void State::readFromFile (std::ifstream &fs, List<State>& list)
     int i=0, currListIndex=list.Len()-1;
     while (!fs.eof())
     {
-        std::getline(fs,s);
+       std::getline(fs,s);
+       if (s=="") continue;
        switch(i)
        {
-       case 0:
-       {
-               State state;
-               list.add(state);
-               currListIndex++;
-               list[currListIndex].capitalName=s;
-               i++;
-               break;
-       }
-       case 1:
-              list[currListIndex].countryName=s;
-              i++;
-              break;
-       case 2:
-       {
-              int index = s.find(':')+2;
-              list[currListIndex].language=s.substr(index, s.length()-index);
-              i++;
-              break;
-       }
-       case 3:
-       {
-           int index = s.find(':')+2;
-           list[currListIndex].monetaryUnit=s.substr(index, s.length()-index);
-              i++;
-              break;
-       }
-       case 4:
-       {
-           int index = s.find(':')+2;
-           list[currListIndex].politicalSystem=s.substr(index, s.length()-index);
-              i++;
-              break;
-       }
-       case 5:
-       {
-           std::string curr;
-           int index = s.find(':')+2;
-           curr=s.substr(index, s.length()-index);
+           case 0:
+           {
+                   State state;
+                   list.add(state);
+                   currListIndex++;
 
-              list[currListIndex].population=atoi(curr.c_str());
-              i++;
-              break;
-       }
-       case 6:
-       {
-              std::string curr;
-              int index = s.find(':')+2;
-              curr=s.substr(index, s.length()-index);
-              list[currListIndex].territoryArea=std::atof(curr.c_str());
-              i++;
-              break;
-       }
-       case 7:
-             i++; break;
+                   int index = s.find(':')+2;
+                   list[currListIndex].capitalName=s.substr(index, s.length()-index);
+                   i++;
+                   break;
+           }
+           case 1:
+           {
+                  int index = s.find(':')+2;
+                  list[currListIndex].countryName=s.substr(index, s.length()-index);
+                  i++;
+                  break;
+           }
+           case 2:
+           {
+                  int index = s.find(':')+2;
+                  list[currListIndex].language=s.substr(index, s.length()-index);
+                  i++;
+                  break;
+           }
+           case 3:
+           {
+                  int index = s.find(':')+2;
+                  list[currListIndex].monetaryUnit=s.substr(index, s.length()-index);
+                  i++;
+                  break;
+           }
+           case 4:
+           {
+                  int index = s.find(':')+2;
+                  list[currListIndex].politicalSystem=s.substr(index, s.length()-index);
+                  i++;
+                  break;
+           }
+           case 5:
+           {
+                  std::string curr;
+                  int index = s.find(':')+2;
+                  curr=s.substr(index, s.length()-index);
 
+                  list[currListIndex].population=atoi(curr.c_str());
+                  i++;
+                  break;
+           }
+           case 6:
+           {
+                  std::string curr;
+                  int index = s.find(':')+2;
+                  curr=s.substr(index, s.length()-index);
 
-       case 8:
-              i=0; break;
-
+                  list[currListIndex].territoryArea=std::atof(curr.c_str());
+                  i=0;
+                  break;
+           }
        }
    }
-    list.removeAt(list.Len()-1);
 }
 
 

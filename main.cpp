@@ -44,7 +44,7 @@ void clearStream()
 void printList(List<State::State>& list)
 {
     for (unsigned int i=0;i<list.Len();i++)
-       std::cout<<list[i].capitalName<<"\n" <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
+       std::cout<<"Capital name: "<<list[i].capitalName<<"\nCountry name: " <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
                    "\nMonetary unit: "<<list[i].monetaryUnit<<"\nPolitical system: " <<list[i].politicalSystem<<
                    "\nPopulation: "<<list[i].population<<"\nArea: "<<list[i].territoryArea<<"\n\n\n";
 }

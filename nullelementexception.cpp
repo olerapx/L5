@@ -9,5 +9,4 @@ NullElementException::NullElementException()
   NullElementException::NullElementException (std::string errorText)
   {
       error=errorText;
-
   }
