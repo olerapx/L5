@@ -27,13 +27,13 @@ enum
 };
 
 //UI
-void handleUserInput(List<State::State>&list);
-void handleAddAction( List<State::State>&list);
-void handleFindAction( List<State::State>&list);
-void handlePrintAction( List<State::State>&list);
-void handleSortAction( List<State::State>&list);
-void handleReadAction( List<State::State>&list);
-void handleWriteAction( List<State::State>&list);
+void handleUserInput(List<State>&list);
+void handleAddAction( List<State>&list);
+void handleFindAction( List<State>&list);
+void handlePrintAction( List<State>&list);
+void handleSortAction( List<State>&list);
+void handleReadAction( List<State>&list);
+void handleWriteAction( List<State>&list);
 
 void clearStream()
 {
@@ -41,7 +41,7 @@ void clearStream()
     while (std::cin.get() != '\n');
 }
 
-void printList(List<State::State>& list)
+void printList(List<State>& list)
 {
     for (unsigned int i=0;i<list.Len();i++)
        std::cout<<"Capital name: "<<list[i].capitalName<<"\nCountry name: " <<list[i].countryName<<"\nLanguage: " <<list[i].language<<
@@ -52,13 +52,13 @@ void printList(List<State::State>& list)
 
 int main()
 {
-   List<State::State>list;
+   List<State>list;
    handleUserInput(list);
 
    return 0;
 }
 
-void handleUserInput(List<State::State>&list)
+void handleUserInput(List<State>&list)
 {
     char s='\0';
     do{
@@ -112,12 +112,12 @@ void handleUserInput(List<State::State>&list)
 }
 
 
-void handleAddAction(List<State::State>&list)
+void handleAddAction(List<State>&list)
 {
     State::readFromKeyboard(list);
 }
 
-void handleFindAction(List<State::State>&list)
+void handleFindAction(List<State>&list)
 {
   std::cout <<"Input:\n"
                 "1 to find by country name\n"
@@ -134,7 +134,7 @@ void handleFindAction(List<State::State>&list)
    std::string field;
    std::getline(std::cin,field);
 
-   State::State state, temp;
+   State state, temp;
 
    try{
    switch(s-'0')
@@ -185,12 +185,12 @@ void handleFindAction(List<State::State>&list)
     }
 }
 
-void handlePrintAction(List<State::State>&list)
+void handlePrintAction(List<State>&list)
 {
     printList(list);
 }
 
-void handleSortAction(List<State::State>&list)
+void handleSortAction(List<State>&list)
 {
     std::cout <<"Input:\n"
                 "1 to sort by name\n"
@@ -235,7 +235,7 @@ void handleSortAction(List<State::State>&list)
     }
 }
 
-void handleReadAction( List<State::State>&list)
+void handleReadAction( List<State>&list)
 {
     std::cout <<"Input filename\n";
     std::string filename;
@@ -244,11 +244,16 @@ void handleReadAction( List<State::State>&list)
 
     std::ifstream ifs;
     ifs.open(filename);
+    if (!ifs.is_open())
+    {
+        ifs.close();
+        return;
+    }
     State::readFromFile(ifs, list);
     ifs.close();
 }
 
-void handleWriteAction( List<State::State>&list)
+void handleWriteAction( List<State>&list)
 {
     std::cout <<"Input filename\n";
     std::string filename;

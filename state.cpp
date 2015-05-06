@@ -1,6 +1,6 @@
 #include "state.h"
 
-State::State::State()
+State::State()
 {
     capitalName="";
     countryName="";
@@ -31,14 +31,14 @@ int State::comparePopulation (const State& s1, const State& s2)
 {
     if (s1.population<s2.population) return -1;
     if(s1.population==s2.population) return 0;
-    if (s1.population>s2.population) return 1;
+    return 1;
 }
 
 int State::compareTerrritoryArea(const State& s1, const State& s2)
 {
     if (s1.territoryArea<s2.territoryArea) return -1;
     if(s1.territoryArea==s2.territoryArea) return 0;
-    if (s1.territoryArea>s2.territoryArea) return 1;
+    return 1;
 }
 
 int State::compareMonetaryUnit(const State& s1, const State& s2)
