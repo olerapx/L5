@@ -115,7 +115,6 @@ void State::readFromFile (std::ifstream &fs, List<State>& list)
                   std::string curr;
                   int index = s.find(':')+2;
                   curr=s.substr(index, s.length()-index);
-
                   list[currListIndex].population=atoi(curr.c_str());
                   i++;
                   break;
@@ -125,7 +124,6 @@ void State::readFromFile (std::ifstream &fs, List<State>& list)
                   std::string curr;
                   int index = s.find(':')+2;
                   curr=s.substr(index, s.length()-index);
-
                   list[currListIndex].territoryArea=std::atof(curr.c_str());
                   i=0;
                   break;
@@ -148,16 +146,16 @@ void State::readFromKeyboard(List<State>&list)
     {
         std::getline(std::cin,s);
         if (s=="") break;
-        std::vector <std::string> parsed;
+        List <std::string> parsed;
         std::string curr;
         std::stringstream stream(s);
 
         while (std::getline(stream, curr, '\t'))
-            parsed.push_back(curr);
+            parsed.add(curr);
 
           State state;
 
-        int len=parsed.size();
+        int len=parsed.Len();
         if (len>0) state.capitalName=parsed[0];
         if (len>1)state.countryName=parsed[1];
         if (len>2)state.language=parsed[2];

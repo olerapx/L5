@@ -18,10 +18,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     state.cpp \
-    nullelementexception.cpp
+    nullelementexception.cpp \
+    uiprovider.cpp
 
 HEADERS += \
     list.h \
     node.h \
     state.h \
-    nullelementexception.h
+    nullelementexception.h \
+    uiprovider.h
