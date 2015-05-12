@@ -1,5 +1,13 @@
 #include "uiprovider.h"
 
+
+ UserAction UIProvider::getAction(char s)
+ {
+    if (Commands.find(s)!= Commands.end()) return Commands[s];
+
+     return ACTION_UNKNOWN;
+ }
+
 void UIProvider::clearStream()
  {
      std::cin.clear();
@@ -14,9 +22,8 @@ void UIProvider::handleUserInput(List<State>&list)
     do{
         s=std::cin.get();
         clearStream();
-        switch(s-'0')
+        switch(getAction(s))
         {
-
            case ACTION_HELP:
              handleHelp();
              break;
@@ -53,7 +60,7 @@ void UIProvider::handleUserInput(List<State>&list)
             return;
 
            default:
-            std::cout<< "Wrong command. To get the command list, input 0\n";
+            std::cout<< "Wrong command. To get the command list, input h\n";
             break;
         }
     }
@@ -123,6 +130,10 @@ void UIProvider::handleFindAction(List<State>&list)
               temp.politicalSystem=field;
               state=list.getElementByElementField(temp, &State::comparePoliticalSystem);
               break;
+
+       default:
+              std::cout <<"Wrong field\n";
+              return;
      }
 
     std::cout<<state.capitalName<<"\n" <<state.countryName<<"\nLanguage: " <<state.language<<
@@ -227,15 +238,15 @@ void UIProvider::handleWriteAction( List<State>&list)
 void UIProvider::handleHelp()
 {
     std::cout <<"input:\n"
-                "0 to get the command list\n"
-                "1 to add States into list\n"
-                "2 to find element\n"
-                "3 to print list\n"
-                "4 to sort\n"
-                "5 to read\n"
-                "6 to write\n"
-                "7 to clear\n"
-                "8 to quit\n";
+                "h to get the command list\n"
+                "a to add States into list\n"
+                "f to find element\n"
+                "p to print list\n"
+                "s to sort\n"
+                "r to read\n"
+                "w to write\n"
+                "c to clear\n"
+                "q to quit\n";
 }
 
 void UIProvider::printList(List<State>& list)
