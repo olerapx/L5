@@ -50,6 +50,9 @@ class UIProvider
 
    static void printList(List<State>& list);
 
+   static void writeToFile (std::ofstream &ofs, List<State>& list);
+   static void readFromFile (std::ifstream &ifs, List<State>& list);
+   static void readFromKeyboard(List<State>&list);
 
 public:
 
